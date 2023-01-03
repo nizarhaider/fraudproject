@@ -1,0 +1,24 @@
+<!-- Create the loading screen template -->
+{% extends "base.html" %}
+
+{% block content %}
+
+<!-- Add the loading screen content and a button to play the game -->
+<div class="container mt-5 text-center" id="loading-content">
+    <h1>Welcome to the Loan Game!</h1>
+    <p>As a bank, your goal is to make the most amount of money by approving or denying loans to customers based on their financial information.</p>
+    <p>Click on the "Play Game" button below to start making decisions and see how much money you've gained or lost at the end of the day.</p>
+    <button type="button" class="btn btn-primary mt-5" id="play-game-btn">Play Game</button>
+</div>
+
+<!-- Add a JavaScript function to hide the loading screen and display the home page when the "Play Game" button is clicked -->
+<script>
+    $('#play-game-btn').click(function(event) {
+        // Hide the loading screen
+        document.getElementById("loading-content").style.display = "none";
+        // Display the home page
+        document.getElementById("home-content").style.display = "block";
+    });
+</script>
+
+{% endblock %}

@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="container mt-5" id="home-content" >
+    <h1 class="text-center mb-5">Welcome to the Loan Game</h1>
+    <div class="text-center mb-5">
+        <h1 id="bank-assets" style="font-size: 50px;">{{ bank_assets }}</h1>
+    </div>
+    <div class="text-center">
+        <form action="/customers" method="POST">
+            <button type="submit" class="btn btn-primary" id="view-customers-btn">View Customers</button>
+        </form>
+    </div>
+    <div id="customer-cards"></div>
+</div>
+<script>
+
+    $('#view-customers-btn').click(function(event) {
+        // Prevent the form from submitting
+        event.preventDefault();
+
+        // Send an AJAX request to the server
+        $.ajax({
+            url: '/customers',
+            type: 'GET',
+            success: function(response) {
+                // Update the page with the response
+                $('#customer-cards').html(response);
+            }
+        });
+    });
+</script>
+
+{% endblock %}

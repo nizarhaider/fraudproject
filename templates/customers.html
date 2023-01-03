@@ -1,0 +1,90 @@
+{% extends "base.html" %}
+
+{% block content %}
+<style>
+
+    .card {
+        margin: 0 auto 1.5rem;
+        text-align: left;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .card-title {
+        font-size: 1.2rem;
+    }
+
+    .card:hover {
+        box-shadow: 0 0.5rem 1rem rgba(0, 0, 0, 0.2);
+        transform: scale(1.05);
+    }
+
+    .card-text {
+        font-size: 1rem;
+    }
+
+    .card-body {
+        padding: 1rem;
+    }
+</style>
+
+<div class="row mt-5 justify-content-center">
+    {% for customer in customers %}
+    <div class="col-3 mb-4 w-100">
+        <div class="card">
+            <div class="card-body">
+                <h4 class="card-title">{{ customer['name'] }}</h4>
+                <p class="card-text">Income: {{ customer['income'] }}</p>
+                <p class="card-text">Current Mortgages: {{ customer['current_mortgages'] }}</p>
+                <p class="card-text">Number of Loans Taken: {{ customer['num_loans'] }}</p>
+                <p class="card-text">Total Amount of Loans Taken: {{ customer['total_loans'] }}</p>
+                <p class="card-text">Amount asking: {{ customer['asking'] }}</p>
+
+                <form action="/decision" method="POST">
+                    <input type="hidden" name="customer_asking" value="{{ customer['asking'] }}">
+                    <input type="hidden" name="bank_assets" value="{{ bank_assets }}">
+                    <div class="form-group">
+                        <label for="decision">Make Decision:</label>
+                        <select class="form-control" name="decision" id="decision">
+                            <option value="approve">Approve</option>
+                            <option value="deny">Deny</option>
+                        </select>
+                    </div>
+                    <button type="submit" class="btn btn-primary" data-amount="{{ customer['asking'] }} " >Submit</button>                </form>
+            </div>
+        </div>
+    </div>
+    {% endfor %}
+<script>
+
+    var formCounter = 0;
+
+    $(function() {
+        // When the form is submitted...
+        $('form').submit(function(event) {
+            // Prevent the form from submitting
+            event.preventDefault();
+
+            // Get the form data
+            var formData = $(this).serialize();
+
+            // Send an AJAX request to the decision route
+            $.ajax({
+                url: '/decision',
+                type: 'POST',
+                data: formData,
+                success: function(response) {
+                    // Update the bank asset value in the home.html template
+                    $('#bank-assets').text(response.bank_assets);
+                    // If all the forms have been submitted, show the final bank asset value
+                    if (response.form_counter == 4) {
+                        $('#bank-assets').fadeIn();
+                    }
+                }
+            });
+        });
+    });
+</script>
+</div>    
+
+
+{% endblock %}

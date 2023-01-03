@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Game - Decision</title>
+</head>
+<body>
+    <h1>{{ customer.name }}</h1>
+    <p>Income: {{ customer.income }}</p>
+    <p>Current Mortgages: {{ customer.current_mortgages }}</p>
+    <p>Number of Loans Taken: {{ customer.num_loans }}</p>
+    <p>Total Amount of Loans Taken: {{ customer.total_loans }}</p>
+    <form action="" method="post">
+        <label for="decision">Make a decision:</label><br>
+        <input type="radio" name="decision" value="approve"> Approve<br>
+        <input type="radio" name="decision" value="deny"> Deny<br><br>
+        <input type="submit" value="Submit">
+    </form>
+</body>
+</html>
